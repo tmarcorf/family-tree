@@ -1,0 +1,9 @@
+.vs
+/obj
+/bin
+.cache
+.pdb
+.dll
+.props
+.exe
+.user
