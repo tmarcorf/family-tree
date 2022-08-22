@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.API", "FamilyTree.API\FamilyTree.API.csproj", "{641F58CD-F575-4A79-AF21-3DFC8EE50C01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.API", "FamilyTree.API\FamilyTree.API.csproj", "{641F58CD-F575-4A79-AF21-3DFC8EE50C01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Domain", "FamilyTree.Domain\FamilyTree.Domain.csproj", "{7AEC862D-7A03-4CFB-9D0C-90A1166B41B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Service", "FamilyTree.Service\FamilyTree.Service.csproj", "{020FF787-6ED1-4C4A-8517-71831AD30A86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Persistence", "FamilyTree.Persistence\FamilyTree.Persistence.csproj", "{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{641F58CD-F575-4A79-AF21-3DFC8EE50C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{641F58CD-F575-4A79-AF21-3DFC8EE50C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{641F58CD-F575-4A79-AF21-3DFC8EE50C01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AEC862D-7A03-4CFB-9D0C-90A1166B41B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AEC862D-7A03-4CFB-9D0C-90A1166B41B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AEC862D-7A03-4CFB-9D0C-90A1166B41B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AEC862D-7A03-4CFB-9D0C-90A1166B41B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020FF787-6ED1-4C4A-8517-71831AD30A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020FF787-6ED1-4C4A-8517-71831AD30A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020FF787-6ED1-4C4A-8517-71831AD30A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020FF787-6ED1-4C4A-8517-71831AD30A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
