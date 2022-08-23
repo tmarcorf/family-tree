@@ -1,3 +1,7 @@
+using FamilyTree.Persistence.Context;
+using FamilyTree.Persistence.Interfaces;
+using Microsoft.Extensions.Options;
+
 namespace FamilyTree.API
 {
     public class Program
@@ -5,6 +9,12 @@ namespace FamilyTree.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add context DB;
+            builder.Services.Configure<FamilyTreeDatabaseContext>(builder.Configuration.GetSection("FamilyTreeDatabaseContext"));
+            builder.Services.AddSingleton<IFamilyTreeDatabaseContext>(serviceProvider => 
+                serviceProvider.GetRequiredService<IOptions<FamilyTreeDatabaseContext>>().Value);
+
 
             // Add services to the container.
 

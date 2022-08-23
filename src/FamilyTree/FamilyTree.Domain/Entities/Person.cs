@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FamilyTree.Domain.Attributes;
+using FamilyTree.Domain.Enums;
 
 namespace FamilyTree.Domain.Entities
 {
-    public class Person
+    [BsonCollection("persons")]
+    public class Person : Document
     {
-        public int Identifier { get; set; }
-
         public string Name { get; set; }
+
+        public GenderTypeEnum GenderType { get; set; }
     }
 }
