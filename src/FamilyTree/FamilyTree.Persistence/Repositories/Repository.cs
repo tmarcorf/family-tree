@@ -1,14 +1,8 @@
 ﻿using FamilyTree.Domain.Attributes;
 using FamilyTree.Domain.Interfaces;
 using FamilyTree.Persistence.Interfaces;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FamilyTree.Persistence.Repositories
 {
@@ -32,10 +26,7 @@ namespace FamilyTree.Persistence.Repositories
         {
             return Task.Run(() =>
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(x => x.Id, objectId);
-
-                return _collection.Find(filter).SingleOrDefaultAsync();
+                return _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
             });
         }
 
@@ -46,25 +37,29 @@ namespace FamilyTree.Persistence.Repositories
 
         public virtual async Task InsertManyAsync(ICollection<TDocument> documents)
         {
-            await _collection.InsertManyAsync(documents);
+            if (documents != null && documents.Count > 0)
+            {
+                await _collection.InsertManyAsync(documents);
+            }
         }
 
         public virtual async Task UpdateAsync(TDocument document)
         {
-            var filter = Builders<TDocument>.Filter.Eq(x => x.Id, document.Id);
-
-            await _collection.FindOneAndReplaceAsync(filter, document);
+            if (_collection.Find(x => x.Id == document.Id).First() != null)
+            {
+                await _collection.FindOneAndReplaceAsync(x => x.Id == document.Id, document);
+            }
         }
+
         public Task DeleteAsync(string id)
         {
             return Task.Run(() =>
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(x => x.Id, objectId);
-
-                _collection.DeleteOneAsync(filter);
+                if (_collection.Find(x => x.Id == id).First() != null)
+                {
+                    _collection.DeleteOneAsync(x => x.Id == id);
+                }
             });
-
         }
 
         private protected string? GetCollectionName(Type documentType)

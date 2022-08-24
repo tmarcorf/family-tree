@@ -1,7 +1,5 @@
 ﻿using FamilyTree.Domain.Entities;
-using FamilyTree.Service.ImplementedContracts;
 using FamilyTree.Service.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FamilyTree.API.Controllers
@@ -34,6 +32,26 @@ namespace FamilyTree.API.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Impossible to recovery person: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult FindAll()
+        {
+            try
+            {
+                var persons = _service.FindAll();
+
+                if (persons == null)
+                {
+                    return NotFound("Persons not found.");
+                }
+
+                return Ok(persons);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Impossible to recovery persons: {ex.Message}");
             }
         }
 

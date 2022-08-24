@@ -1,8 +1,9 @@
 ﻿using FamilyTree.Domain.Entities;
 using FamilyTree.Persistence.Interfaces;
 using FamilyTree.Service.Interfaces;
+using System.Linq.Expressions;
 
-namespace FamilyTree.Service.ImplementedContracts
+namespace FamilyTree.Service.Services
 {
     public class PersonService : IPersonService
     {
@@ -21,6 +22,11 @@ namespace FamilyTree.Service.ImplementedContracts
             }
 
             return null;
+        }
+
+        public IEnumerable<Person> FindAll()
+        {
+            return _personRepository.GetBy(x => true);
         }
 
         public async Task<Person> Create(Person person)
@@ -52,5 +58,7 @@ namespace FamilyTree.Service.ImplementedContracts
 
             return null;
         }
+
+        
     }
 }

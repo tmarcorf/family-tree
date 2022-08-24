@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FamilyTree.Domain.Enums
+﻿namespace FamilyTree.Domain.Enums
 {
     public enum RelationshipTypeEnum
     {
-        FATHER,
+        FATHER = 0,
 
-        SON,
+        SON = 1,
 
-        HUSBAND,
+        HUSBAND = 2,
 
-        BROTHER,
+        BROTHER = 3,
 
-        COUSIN,
+        COUSIN = 4,
 
-        MOTHER,
+        MOTHER = 5,
 
-        DAUGHTER,
+        DAUGHTER = 6,
 
-        WIFE,
+        WIFE = 7,
 
-        SISTER
+        SISTER = 8
     }
 }

@@ -1,8 +1,8 @@
 using FamilyTree.Persistence.Context;
 using FamilyTree.Persistence.Interfaces;
 using FamilyTree.Persistence.Repositories;
-using FamilyTree.Service.ImplementedContracts;
 using FamilyTree.Service.Interfaces;
+using FamilyTree.Service.Services;
 using Microsoft.Extensions.Options;
 
 namespace FamilyTree.API
@@ -16,7 +16,8 @@ namespace FamilyTree.API
 
             // Add context DB;
             services.Configure<FamilyTreeDatabaseContext>(builder.Configuration.GetSection("FamilyTreeDatabaseContext"));
-            services.AddSingleton<IFamilyTreeDatabaseContext>(serviceProvider => 
+            services.AddSingleton<IFamilyTreeDatabaseContext>(
+                serviceProvider => 
                 serviceProvider.GetRequiredService<IOptions<FamilyTreeDatabaseContext>>().Value);
 
             //Add repository
