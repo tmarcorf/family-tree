@@ -13,7 +13,5 @@ namespace FamilyTree.Domain.Interfaces
         [BsonId]
         [BsonRepresentation(BsonType.String)]
         ObjectId Id { get; set; }
-
-        DateTime CreatedAt { get; }
     }
 }

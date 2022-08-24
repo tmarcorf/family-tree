@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FamilyTree.Persistence\FamilyTree.Persistence.csproj" />
+    <ProjectReference Include="..\FamilyTree.Service\FamilyTree.Service.csproj" />
   </ItemGroup>
 
 </Project>

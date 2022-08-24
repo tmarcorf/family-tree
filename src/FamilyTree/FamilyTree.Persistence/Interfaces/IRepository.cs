@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace FamilyTree.Persistence.Interfaces
     {
         Task<TDocument> GetByIdAsync(string id);
 
-        Task<IEnumerable<TDocument>> GetAllAsync();
+        IEnumerable<TDocument> GetBy(Expression<Func<TDocument, bool>> filter);
 
         Task InsertAsync(TDocument document);
 

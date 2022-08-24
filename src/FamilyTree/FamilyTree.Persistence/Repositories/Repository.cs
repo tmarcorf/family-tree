@@ -6,6 +6,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,10 +23,9 @@ namespace FamilyTree.Persistence.Repositories
             _collection = db.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
         }
 
-        public Task<IEnumerable<TDocument>> GetAllAsync()
+        public IEnumerable<TDocument> GetBy(Expression<Func<TDocument, bool>> filter)
         {
-            throw new NotImplementedException();
-
+            return _collection.Find(filter).ToEnumerable();            
         }
 
         public virtual Task<TDocument> GetByIdAsync(string id)
@@ -57,14 +57,21 @@ namespace FamilyTree.Persistence.Repositories
         }
         public Task DeleteAsync(string id)
         {
-            throw new NotImplementedException();
+            return Task.Run(() =>
+            {
+                var objectId = new ObjectId(id);
+                var filter = Builders<TDocument>.Filter.Eq(x => x.Id, objectId);
+
+                _collection.DeleteOneAsync(filter);
+            });
+
         }
 
-        private protected string GetCollectionName(Type documentType)
+        private protected string? GetCollectionName(Type documentType)
         {
             return ((BsonCollectionAttribute)documentType
                 .GetCustomAttributes(typeof(BsonCollectionAttribute), true)
-                .FirstOrDefault())
+                .FirstOrDefault())?
                 .CollectionName;
         }
     }

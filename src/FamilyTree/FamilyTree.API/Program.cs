@@ -1,5 +1,8 @@
 using FamilyTree.Persistence.Context;
 using FamilyTree.Persistence.Interfaces;
+using FamilyTree.Persistence.Repositories;
+using FamilyTree.Service.ImplementedContracts;
+using FamilyTree.Service.Interfaces;
 using Microsoft.Extensions.Options;
 
 namespace FamilyTree.API
@@ -9,19 +12,24 @@ namespace FamilyTree.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var services = builder.Services;
 
             // Add context DB;
-            builder.Services.Configure<FamilyTreeDatabaseContext>(builder.Configuration.GetSection("FamilyTreeDatabaseContext"));
-            builder.Services.AddSingleton<IFamilyTreeDatabaseContext>(serviceProvider => 
+            services.Configure<FamilyTreeDatabaseContext>(builder.Configuration.GetSection("FamilyTreeDatabaseContext"));
+            services.AddSingleton<IFamilyTreeDatabaseContext>(serviceProvider => 
                 serviceProvider.GetRequiredService<IOptions<FamilyTreeDatabaseContext>>().Value);
 
+            //Add repository
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IPersonRepository, PersonRepository>();
 
             // Add services to the container.
+            services.AddScoped<IPersonService, PersonService>();
 
-            builder.Services.AddControllers();
+            services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
 
             var app = builder.Build();
 
