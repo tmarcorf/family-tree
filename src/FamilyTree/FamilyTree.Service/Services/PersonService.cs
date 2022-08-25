@@ -58,7 +58,5 @@ namespace FamilyTree.Service.Services
 
             return null;
         }
-
-        
     }
 }

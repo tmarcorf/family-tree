@@ -45,9 +45,11 @@ namespace FamilyTree.Persistence.Repositories
 
         public virtual async Task UpdateAsync(TDocument document)
         {
-            if (_collection.Find(x => x.Id == document.Id).First() != null)
+            var documentExist = _collection.AsQueryable().Any(x => x.Id == document.Id);
+
+            if (documentExist)
             {
-                await _collection.FindOneAndReplaceAsync(x => x.Id == document.Id, document);
+                await _collection.ReplaceOneAsync(x => x.Id == document.Id, document);
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using FamilyTree.Domain.Entities;
 using FamilyTree.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace FamilyTree.API.Controllers
 {
@@ -72,6 +73,41 @@ namespace FamilyTree.API.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Failure while creating person: {ex.Message}");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Person person)
+        {
+            try
+            {
+                if (person == null)
+                {
+                    return NotFound("Person not updated.");
+                }
+
+                await _service.Update(person);
+
+                return Ok(person);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Failure while updating person: {ex.Message}");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            try
+            {
+                await _service.Delete(id);
+
+                return Ok($"Id:{id} has been deleted.");
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Failure while deleting person: {ex.Message}");
             }
         }
     }
