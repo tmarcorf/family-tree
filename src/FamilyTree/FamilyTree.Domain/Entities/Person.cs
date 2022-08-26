@@ -8,9 +8,9 @@ namespace FamilyTree.Domain.Entities
     {
         public string Name { get; set; }
 
-        public string[] Parent { get; set; }
+        public List<string> Parent { get; set; }
 
-        public string[] Children { get; set; }
+        public List<string> Children { get; set; }
 
         public GenderTypeEnum GenderType { get; set; }
     }
