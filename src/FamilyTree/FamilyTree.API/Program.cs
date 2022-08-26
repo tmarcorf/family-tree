@@ -2,6 +2,7 @@ using FamilyTree.Persistence.Context;
 using FamilyTree.Persistence.Interfaces;
 using FamilyTree.Persistence.Repositories;
 using FamilyTree.Service.Interfaces;
+using FamilyTree.Service.Processors;
 using FamilyTree.Service.Services;
 using Microsoft.Extensions.Options;
 
@@ -26,8 +27,12 @@ namespace FamilyTree.API
 
             // Add services to the container.
             services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<ITreeProcessor, TreeProcessor>();
 
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();

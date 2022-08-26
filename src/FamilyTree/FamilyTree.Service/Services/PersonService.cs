@@ -8,17 +8,20 @@ namespace FamilyTree.Service.Services
     public class PersonService : IPersonService
     {
         private readonly IPersonRepository _personRepository;
+        private readonly ITreeProcessor _treeProcessor;
 
-        public PersonService(IPersonRepository personRepository)
+        public PersonService(IPersonRepository personRepository, ITreeProcessor treeProcessor)
         {
             _personRepository = personRepository;
+            _treeProcessor = treeProcessor;
         }
 
-        public async Task<Person> FindById(string id)
+        public async Task<PersonTree> FindById(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                return await _personRepository.GetByIdAsync(id);
+                var person = await _personRepository.GetByIdAsync(id);
+                return _treeProcessor.GetPersonTree(person.Id, _personRepository.GetBy(x => true).ToList());
             }
 
             return null;
@@ -49,14 +52,12 @@ namespace FamilyTree.Service.Services
             return null;
         }
 
-        public async Task<Person> Delete(string id)
+        public async Task Delete(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
                 await _personRepository.DeleteAsync(id);
             }
-
-            return null;
         }
     }
 }

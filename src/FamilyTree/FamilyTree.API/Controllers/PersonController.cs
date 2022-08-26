@@ -5,7 +5,7 @@ using System;
 
 namespace FamilyTree.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/person")]
     [ApiController]
     public class PersonController : ControllerBase
     {
@@ -21,14 +21,14 @@ namespace FamilyTree.API.Controllers
         {
             try
             {
-                var person = await _service.FindById(id);
+                var personTree = await _service.FindById(id);
 
-                if (person == null)
+                if (personTree == null)
                 {
                     return NotFound("Person not found.");
                 }
 
-                return Ok(person);
+                return Ok(personTree);
             }
             catch (Exception ex)
             {
@@ -81,6 +81,8 @@ namespace FamilyTree.API.Controllers
         {
             try
             {
+                var req = Request;
+
                 if (person == null)
                 {
                     return NotFound("Person not updated.");
@@ -103,7 +105,11 @@ namespace FamilyTree.API.Controllers
             {
                 await _service.Delete(id);
 
-                return Ok($"Id:{id} has been deleted.");
+                return Ok($"Id: {id} has been deleted.");
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound($"Failure while deleting id {id}");
             }
             catch (Exception ex)
             {

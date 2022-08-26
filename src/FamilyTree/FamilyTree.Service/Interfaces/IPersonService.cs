@@ -4,7 +4,7 @@ namespace FamilyTree.Service.Interfaces
 {
     public interface IPersonService
     {
-        Task<Person> FindById(string id);
+        Task<PersonTree> FindById(string id);
 
         IEnumerable<Person> FindAll();
 
@@ -12,6 +12,6 @@ namespace FamilyTree.Service.Interfaces
 
         Task<Person> Update(Person person);
 
-        Task<Person> Delete(string id);
+        Task Delete(string id);
     }
 }

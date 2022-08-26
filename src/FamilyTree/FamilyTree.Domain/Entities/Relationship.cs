@@ -4,10 +4,15 @@ namespace FamilyTree.Domain.Entities
 {
     public class Relationship
     {
-        public int Parent { get; set; }
+        public Relationship()
+        {
+            Relationships = new List<Relationship>();
+        }
 
-        public int Children { get; set; }
+        public string Name { get; set; }
 
-        public RelationshipTypeEnum RelationshipType { get; set; }
+        public string RelationshipType { get; set; }
+
+        public List<Relationship> Relationships { get; set; }
     }
 }
