@@ -22,7 +22,6 @@ namespace FamilyTree.API
                 serviceProvider.GetRequiredService<IOptions<FamilyTreeDatabaseContext>>().Value);
 
             //Add repository
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IPersonRepository, PersonRepository>();
 
             // Add services to the container.
