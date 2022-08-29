@@ -21,22 +21,41 @@ namespace FamilyTree.Service.Services
             if (!string.IsNullOrEmpty(id))
             {
                 var person = await _personRepository.GetByIdAsync(id);
-                return _treeProcessor.GetPersonTree(person.Id, _personRepository.GetBy(x => true).ToList());
+                var persons = await _personRepository.GetManyBy(x => true);
+
+                if (person != null)
+                {
+                    return _treeProcessor.GetPersonTree(person.Id, persons);
+                }
             }
 
             return null;
         }
 
-        public IEnumerable<Person> FindAll()
+        public async Task<Person> FindByName(string name)
         {
-            return _personRepository.GetBy(x => true);
+            if (!string.IsNullOrEmpty(name))
+            {
+                var person = await _personRepository.GetOneBy(x => x.Name == name);
+
+                return person;
+            }
+
+            return null;
+        }
+
+        public async Task<List<Person>> FindAll()
+        {
+            return await _personRepository.GetManyBy(x => true);
         }
 
         public async Task<Person> Create(Person person)
         {
-            if (!string.IsNullOrEmpty(person.Name))
+            if (person != null && !string.IsNullOrEmpty(person.Name))
             {
                 await _personRepository.InsertAsync(person);
+
+                return await _personRepository.GetByIdAsync(person.Id);
             }
 
             return null;
@@ -47,17 +66,21 @@ namespace FamilyTree.Service.Services
             if (!string.IsNullOrEmpty(person.Name))
             {
                 await _personRepository.UpdateAsync(person);
+
+                return await _personRepository.GetByIdAsync(person.Id);
             }
 
             return null;
         }
 
-        public async Task Delete(string id)
+        public async Task<bool> Delete(string id)
         {
             if (!string.IsNullOrEmpty(id))
             {
-                await _personRepository.DeleteAsync(id);
+                return await _personRepository.DeleteAsync(id);
             }
+
+            return false;
         }
     }
 }

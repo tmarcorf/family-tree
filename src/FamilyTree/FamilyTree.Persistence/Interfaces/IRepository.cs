@@ -7,14 +7,14 @@ namespace FamilyTree.Persistence.Interfaces
     {
         Task<TDocument> GetByIdAsync(string id);
 
-        IEnumerable<TDocument> GetBy(Expression<Func<TDocument, bool>> filter);
+        Task<TDocument> GetOneBy(Expression<Func<TDocument, bool>> filter);
+
+        Task<List<TDocument>> GetManyBy(Expression<Func<TDocument, bool>> filter);
 
         Task InsertAsync(TDocument document);
 
-        Task InsertManyAsync(ICollection<TDocument> documents);
+        Task<TDocument> UpdateAsync(TDocument document);
 
-        Task UpdateAsync(TDocument document);
-
-        Task DeleteAsync(string id);
+        Task<bool> DeleteAsync(string id);
     }
 }

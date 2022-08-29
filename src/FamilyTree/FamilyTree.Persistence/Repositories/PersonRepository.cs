@@ -2,7 +2,6 @@
 using FamilyTree.Persistence.Helpers;
 using FamilyTree.Persistence.Interfaces;
 using MongoDB.Bson;
-using System;
 
 namespace FamilyTree.Persistence.Repositories
 {
@@ -26,7 +25,7 @@ namespace FamilyTree.Persistence.Repositories
             return base.InsertAsync(person);
         }
 
-        public override Task UpdateAsync(Person person)
+        public override Task<Person> UpdateAsync(Person person)
         {
             _personHelper.ExecuteConsistence(person.Id, person.Parent, true);
             _personHelper.ExecuteConsistence(person.Id, person.Children, false);

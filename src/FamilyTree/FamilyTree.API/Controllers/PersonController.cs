@@ -16,7 +16,7 @@ namespace FamilyTree.API.Controllers
             _service = service;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("id/{id}")]
         public async Task<IActionResult> FindById(string id)
         {
             try
@@ -36,12 +36,32 @@ namespace FamilyTree.API.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult FindAll()
+        [HttpGet("name/{name}")]
+        public async Task<IActionResult> FindByNameId(string name)
         {
             try
             {
-                var persons = _service.FindAll();
+                var person = await _service.FindByName(name);
+
+                if (person == null)
+                {
+                    return NotFound("Person not found.");
+                }
+
+                return Ok(person);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Impossible to recovery person: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> FindAll()
+        {
+            try
+            {
+                var persons = await _service.FindAll();
 
                 if (persons == null)
                 {
@@ -63,7 +83,7 @@ namespace FamilyTree.API.Controllers
             {
                 var personCreate = await _service.Create(person);
 
-                if (person == null)
+                if (personCreate == null)
                 {
                     return BadRequest("Person not entered.");
                 }
@@ -81,16 +101,14 @@ namespace FamilyTree.API.Controllers
         {
             try
             {
-                var req = Request;
-
                 if (person == null)
                 {
                     return NotFound("Person not updated.");
                 }
 
-                await _service.Update(person);
+                var result = await _service.Update(person);
 
-                return Ok(person);
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -98,14 +116,19 @@ namespace FamilyTree.API.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("id/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             try
             {
-                await _service.Delete(id);
+                var result = await _service.Delete(id);
 
-                return Ok($"Id: {id} has been deleted.");
+                if (!result)
+                {
+                    return BadRequest($"Id {id} not found");
+                }
+
+                return Ok($"Id {id} has been deleted.");
             }
             catch (InvalidOperationException)
             {

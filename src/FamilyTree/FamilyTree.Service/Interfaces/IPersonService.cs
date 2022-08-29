@@ -6,12 +6,14 @@ namespace FamilyTree.Service.Interfaces
     {
         Task<PersonTree> FindById(string id);
 
-        IEnumerable<Person> FindAll();
+        Task<Person> FindByName(string name);
+
+        Task<List<Person>> FindAll();
 
         Task<Person> Create(Person person);
 
         Task<Person> Update(Person person);
 
-        Task Delete(string id);
+        Task<bool> Delete(string id);
     }
 }

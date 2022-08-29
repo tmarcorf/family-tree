@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace FamilyTree.Persistence.Repositories
 {
-    public class Repository<TDocument> : IRepository<TDocument> 
+    public class Repository<TDocument> : IRepository<TDocument>
         where TDocument : IDocument
     {
         private readonly IMongoCollection<TDocument> _collection;
@@ -17,51 +17,57 @@ namespace FamilyTree.Persistence.Repositories
             _collection = db.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
         }
 
-        public IEnumerable<TDocument> GetBy(Expression<Func<TDocument, bool>> filter)
+        public virtual async Task<TDocument> GetOneBy(Expression<Func<TDocument, bool>> filter)
         {
-            return _collection.Find(filter).ToEnumerable();            
+            var result = await _collection.FindAsync(filter);
+
+            return result.First();
         }
 
-        public virtual Task<TDocument> GetByIdAsync(string id)
+        public virtual Task<List<TDocument>> GetManyBy(Expression<Func<TDocument, bool>> filter)
         {
             return Task.Run(() =>
             {
-                return _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
+                var documents = _collection.Find(filter).ToCursor();
+
+                return documents.ToList();
             });
         }
 
-        public virtual Task InsertAsync(TDocument document)
+        public virtual async Task<TDocument> GetByIdAsync(string id)
         {
-            return Task.Run(() => _collection.InsertOneAsync(document));
+            var result = await _collection.FindAsync(x => x.Id == id);
+
+            return result.ToListAsync().Result.First();
         }
 
-        public virtual async Task InsertManyAsync(ICollection<TDocument> documents)
+        public virtual async Task InsertAsync(TDocument document)
         {
-            if (documents != null && documents.Count > 0)
-            {
-                await _collection.InsertManyAsync(documents);
-            }
+            await _collection.InsertOneAsync(document);
         }
 
-        public virtual async Task UpdateAsync(TDocument document)
+        public virtual async Task<TDocument> UpdateAsync(TDocument document)
         {
             var documentExist = _collection.AsQueryable().Any(x => x.Id == document.Id);
 
             if (documentExist)
             {
-                await _collection.ReplaceOneAsync(x => x.Id == document.Id, document);
+                return await _collection.FindOneAndReplaceAsync(x => x.Id == document.Id, document);
             }
+
+            return default;
         }
 
-        public Task DeleteAsync(string id)
+        public virtual async Task<bool> DeleteAsync(string id)
         {
-            return Task.Run(() =>
+            if (_collection.Find(x => x.Id == id).First() != null)
             {
-                if (_collection.Find(x => x.Id == id).First() != null)
-                {
-                    _collection.DeleteOneAsync(x => x.Id == id);
-                }
-            });
+                var result = await _collection.DeleteOneAsync(x => x.Id == id);
+
+                return (result.IsAcknowledged && result.DeletedCount > 0);
+            }
+
+            return false;
         }
 
         private protected string? GetCollectionName(Type documentType)
@@ -71,5 +77,7 @@ namespace FamilyTree.Persistence.Repositories
                 .FirstOrDefault())?
                 .CollectionName;
         }
+
+
     }
 }
