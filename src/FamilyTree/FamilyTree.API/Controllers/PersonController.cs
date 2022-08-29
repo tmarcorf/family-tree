@@ -6,6 +6,7 @@ using System;
 namespace FamilyTree.API.Controllers
 {
     [Route("api/person")]
+    [FormatFilter]
     [ApiController]
     public class PersonController : ControllerBase
     {
@@ -56,7 +57,7 @@ namespace FamilyTree.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> FindAll()
         {
             try

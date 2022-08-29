@@ -1,5 +1,10 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/src/FamilyTree/.editorconfig
+.vs/
+obj/
+bin/
+.cache
+.pdb
+.dll
+.props
+.exe
+.user
+.json

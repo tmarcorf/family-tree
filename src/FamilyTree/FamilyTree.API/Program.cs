@@ -18,7 +18,7 @@ namespace FamilyTree.API
             // Add context DB;
             services.Configure<FamilyTreeDatabaseContext>(builder.Configuration.GetSection("FamilyTreeDatabaseContext"));
             services.AddSingleton<IFamilyTreeDatabaseContext>(
-                serviceProvider => 
+                serviceProvider =>
                 serviceProvider.GetRequiredService<IOptions<FamilyTreeDatabaseContext>>().Value);
 
             //Add repository
@@ -28,10 +28,12 @@ namespace FamilyTree.API
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<ITreeProcessor, TreeProcessor>();
 
-            services.AddControllers(options =>
-            {
-                options.RespectBrowserAcceptHeader = true;
-            });
+            services
+                .AddControllers(options =>
+                {
+                    options.RespectBrowserAcceptHeader = true;
+                })
+                .AddXmlSerializerFormatters();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
