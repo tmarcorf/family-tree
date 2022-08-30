@@ -27,25 +27,40 @@ namespace FamilyTree.Service.Processors
             if (person != null)
             {
                 personTree.Name = person.Name;
-                personTree.Relationships = PopulateRelationships(person, persons);
+                personTree.Ascendants = PopulateRelationships(person, persons, true);
+                personTree.Descendants = PopulateRelationships(person, persons, false);
             }
 
             return personTree;
         }
 
-        private List<Relationship> PopulateRelationships(Person personCore, List<Person> persons)
+        private List<Relationship> PopulateRelationships(Person personCore, List<Person> persons, bool ascendants)
         { 
             var relationships = new List<Relationship>();
 
             persons.ForEach(person =>
             {
-                if (!string.IsNullOrEmpty(personCore.Id) && person.Children.Contains(personCore.Id))
+                if (ascendants)
                 {
-                    var relationship = GetRelationship(person.Name, _relationshipType[RelationshipTypeEnum.PARENT]);
-                    relationship.Relationships = PopulateRelationships(person, persons);
+                    if (!string.IsNullOrEmpty(personCore.Id) && person.Children.Contains(personCore.Id))
+                    {
+                        var relationship = GetRelationship(person.Name, _relationshipType[RelationshipTypeEnum.PARENT]);
+                        relationship.Relationships = PopulateRelationships(person, persons, true);
 
-                    relationships.Add(relationship);
+                        relationships.Add(relationship);
+                    }
                 }
+                else
+                {
+                    if (!string.IsNullOrEmpty(personCore.Id) && person.Parent.Contains(personCore.Id))
+                    {
+                        var relationship = GetRelationship(person.Name, _relationshipType[RelationshipTypeEnum.CHILD]);
+                        relationship.Relationships = PopulateRelationships(person, persons, false);
+
+                        relationships.Add(relationship);
+                    }
+                }
+                
             });
 
             return relationships;
@@ -65,10 +80,7 @@ namespace FamilyTree.Service.Processors
             return new Dictionary<RelationshipTypeEnum, string>
             {
                 { RelationshipTypeEnum.PARENT, "parent" },
-                { RelationshipTypeEnum.SPOUSE, "spouse" },
                 { RelationshipTypeEnum.CHILD, "child" },
-                { RelationshipTypeEnum.SIBLINGS, "siblings" },
-                { RelationshipTypeEnum.COUSIN, "primo" }
             };
         }
     }

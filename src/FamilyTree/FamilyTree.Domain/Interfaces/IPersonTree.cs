@@ -1,18 +1,19 @@
-﻿using FamilyTree.Domain.Interfaces;
+﻿using FamilyTree.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FamilyTree.Domain.Entities
+namespace FamilyTree.Domain.Interfaces
 {
-    public class PersonTree : IPersonTree
+    public interface IPersonTree
     {
         public string Name { get; set; }
 
         public List<Relationship> Ascendants { get; set; }
 
         public List<Relationship> Descendants { get; set; }
+
     }
 }
