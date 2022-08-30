@@ -8,6 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["FamilyTree.API/FamilyTree.API.csproj", "FamilyTree.API/"]
+COPY ["FamilyTree.Persistence/FamilyTree.Persistence.csproj", "FamilyTree.Persistence/"]
+COPY ["FamilyTree.Domain/FamilyTree.Domain.csproj", "FamilyTree.Domain/"]
+COPY ["FamilyTree.Service/FamilyTree.Service.csproj", "FamilyTree.Service/"]
 RUN dotnet restore "FamilyTree.API/FamilyTree.API.csproj"
 COPY . .
 WORKDIR "/src/FamilyTree.API"

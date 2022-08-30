@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Service", "Famil
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Persistence", "FamilyTree.Persistence\FamilyTree.Persistence.csproj", "{A43DF204-79A2-4C2F-8DF5-587E6FB880D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.Tests", "FamilyTree.Tests\FamilyTree.Tests.csproj", "{7AB62DF1-0726-406A-B8AA-6EAD8C33A3F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.Tests", "FamilyTree.Tests\FamilyTree.Tests.csproj", "{7AB62DF1-0726-406A-B8AA-6EAD8C33A3F1}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B69546F0-63D8-42DA-A511-32580DE9331E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7AB62DF1-0726-406A-B8AA-6EAD8C33A3F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB62DF1-0726-406A-B8AA-6EAD8C33A3F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB62DF1-0726-406A-B8AA-6EAD8C33A3F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B69546F0-63D8-42DA-A511-32580DE9331E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B69546F0-63D8-42DA-A511-32580DE9331E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B69546F0-63D8-42DA-A511-32580DE9331E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B69546F0-63D8-42DA-A511-32580DE9331E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

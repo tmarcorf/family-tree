@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  familytreedb:
+    container_name: familytreedb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  familytree.api:
+    container_name: familytree.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "FamilyTreeDatabaseContext:ConnectionString=mongodb://familytreedb:27017"
+    depends_on:
+      - familytreedb
+    ports:
+      - "8000:80"

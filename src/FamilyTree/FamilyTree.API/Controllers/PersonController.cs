@@ -1,11 +1,10 @@
 ﻿using FamilyTree.Domain.Entities;
 using FamilyTree.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace FamilyTree.API.Controllers
 {
-    [Route("api/person")]
+    [Route("api/person/v1")]
     [FormatFilter]
     [ApiController]
     public class PersonController : ControllerBase
@@ -57,7 +56,7 @@ namespace FamilyTree.API.Controllers
             }
         }
 
-        [HttpGet()]
+        [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             try
