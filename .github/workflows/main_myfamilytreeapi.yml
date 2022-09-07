@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOTNET_ROOT: src/FamilyTree
+  DOTNET_ROOT: src\FamilyTree
   SOLUTION_PATH: .\src\FamilyTree\FamilyTree.sln
 
 jobs:
